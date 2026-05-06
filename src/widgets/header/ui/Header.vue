@@ -12,7 +12,7 @@ const { isMenuOpen, isScrolled, headerRef, toggleMenu, closeMenu } = useHeader()
 <template>
   <header
     ref="headerRef"
-    class="header"
+    class="header dark"
     :class="{
       'is-active': isMenuOpen,
       scroll: isScrolled,

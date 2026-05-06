@@ -7,10 +7,7 @@ import ScrollDownButton from '@/shared/ui/scroll-down-button/ScrollDownButton.vu
     <div class="hero__container">
       <div class="hero__body">
         <div class="hero__subtitle">
-          <p>
-            Ми допоможемо підібрати ідеальні окуляри та надамо
-            безкоштовну консультацію
-          </p>
+          <p>Ми допоможемо підібрати ідеальні окуляри та надамо безкоштовну консультацію</p>
         </div>
         <h1 class="hero__title" id="hero-title">Ми допоможемо вам побачити світ по-новому.</h1>
         <div class="hero__buttons">

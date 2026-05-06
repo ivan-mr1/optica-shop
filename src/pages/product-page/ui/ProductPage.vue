@@ -89,7 +89,7 @@ onMounted(loadProduct);
           </div>
 
           <div class="product-page__meta">
-            <span>Артикул: {{ product.code || 'GL-00' + product.id }}</span>
+            <span>Код: {{ product.code }}</span>
             <span>Наявність: В наявності</span>
           </div>
         </div>
