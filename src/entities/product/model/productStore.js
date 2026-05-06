@@ -24,10 +24,10 @@ export const useProductStore = defineStore('product', () => {
     isLoading.value = true;
     error.value = null;
     try {
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 300));
       allItems.value = itemsData;
     } catch {
-      error.value = "Не вдалося завантажити товари.";
+      error.value = 'Не вдалося завантажити товари.';
     } finally {
       isLoading.value = false;
     }
@@ -38,7 +38,7 @@ export const useProductStore = defineStore('product', () => {
   };
 
   const getProductById = (id) => {
-    return itemsData.find(item => item.id === Number(id));
+    return itemsData.find((item) => item.id === Number(id));
   };
 
   return {

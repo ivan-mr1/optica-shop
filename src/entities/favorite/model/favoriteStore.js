@@ -13,7 +13,7 @@ export const useFavoriteStore = defineStore('favorite', () => {
     isLoading.value = true;
     try {
       // Имитируем задержку
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise((resolve) => setTimeout(resolve, 200));
       const data = localStorage.getItem('favorites');
       favorites.value = data ? JSON.parse(data) : [];
     } catch {

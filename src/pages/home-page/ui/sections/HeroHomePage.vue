@@ -8,13 +8,12 @@ import ScrollDownButton from '@/shared/ui/scroll-down-button/ScrollDownButton.vu
       <div class="hero__body">
         <div class="hero__subtitle">
           <p>
-            Завітайте до нашого магазину — ми допоможемо підібрати ідеальні окуляри та надамо
+            Ми допоможемо підібрати ідеальні окуляри та надамо
             безкоштовну консультацію
           </p>
         </div>
         <h1 class="hero__title" id="hero-title">Ми допоможемо вам побачити світ по-новому.</h1>
         <div class="hero__buttons">
-          <Button class="hero__button" goto=".about">ПРО НАС</Button>
           <Button class="hero__button" goto=".products">ПРОДУКТИ</Button>
         </div>
       </div>
@@ -22,7 +21,7 @@ import ScrollDownButton from '@/shared/ui/scroll-down-button/ScrollDownButton.vu
     <video class="video-fon" autoplay muted loop>
       <source type="video/mp4" src="@/shared/assets/video/4.mp4" />
     </video>
-    <ScrollDownButton goto=".about" />
+    <ScrollDownButton goto=".products" />
   </section>
 </template>
 <style scoped lang="scss">

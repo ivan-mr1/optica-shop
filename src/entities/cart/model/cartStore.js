@@ -40,7 +40,7 @@ export const useCartStore = defineStore('cart', () => {
     error.value = null;
     try {
       // Имитируем запрос к серверу
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       orderId.value = Math.floor(Math.random() * 10000);
       cart.value = [];
     } catch {

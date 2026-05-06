@@ -18,7 +18,7 @@ const { isLoading, error, runAsync } = useLoadingState();
 const loadProduct = async () => {
   await runAsync(async () => {
     // Имитируем небольшую задержку
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     const data = productStore.getProductById(route.params.id);
     if (!data) throw new Error('Товар не знайдено');
     product.value = data;
@@ -36,11 +36,7 @@ onMounted(loadProduct);
 <template>
   <div class="product-page">
     <div class="product-page__container">
-      <Breadcrumbs
-        :items="[
-          { name: product?.title || 'Завантаження...' },
-        ]"
-      />
+      <Breadcrumbs :items="[{ name: product?.title || 'Завантаження...' }]" />
 
       <div v-if="isLoading" class="product-page__skeleton">
         <div class="product-page__grid">

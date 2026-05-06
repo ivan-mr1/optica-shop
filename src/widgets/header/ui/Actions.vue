@@ -1,7 +1,7 @@
 <script setup>
 import { OpenCartButton } from '@/features/cart';
 import { OpenFavoritesButton } from '@/features/favorite';
-import { ThemeToggle } from '@/features/theme-toggle';
+import { ThemeToggle } from '@/shared/ui/theme-toggle';
 </script>
 
 <template>

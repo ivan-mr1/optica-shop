@@ -1,49 +1,28 @@
-<style scoped>
-.toggle {
-  background-color: #fff;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.1);
-  line-height: 1;
-}
+<script setup>
+defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-.input {
-  display: none;
-}
+const emit = defineEmits(['update:modelValue']);
 
-.icon {
-  grid-column: 1 / 1;
-  grid-row: 1 / 1;
-  transition: transform 500ms;
-  line-height: 0.1;
-}
-
-.icon--moon {
-  transition-delay: 200ms;
-}
-
-.icon--sun {
-  transform: scale(0);
-}
-
-#switch:checked + .icon--moon {
-  transform: rotate(360deg) scale(0);
-}
-
-#switch:checked ~ .icon--sun {
-  transition-delay: 200ms;
-  transform: scale(1) rotate(360deg);
-}
-</style>
+const onToggle = (event) => {
+  emit('update:modelValue', event.target.checked);
+};
+</script>
 
 <template>
   <div class="container">
-    <label for="switch" class="toggle">
-      <input type="checkbox" class="input" id="switch" />
+    <label :for="`switch-${$.uid}`" class="toggle">
+      <input
+        type="checkbox"
+        class="input"
+        :id="`switch-${$.uid}`"
+        :checked="modelValue"
+        @change="onToggle"
+      />
       <div class="icon icon--moon">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -76,3 +55,54 @@
     </label>
   </div>
 </template>
+
+<style scoped>
+.toggle {
+  background-color: var(--color-white);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  line-height: 1;
+  transition: background-color 0.3s ease;
+}
+
+.input {
+  display: none;
+}
+
+.icon {
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
+  transition: transform 500ms;
+  line-height: 0.1;
+  color: var(--color-black);
+}
+
+.icon--moon {
+  transition-delay: 200ms;
+}
+
+.icon--sun {
+  transform: scale(0);
+}
+
+.input:checked + .icon--moon {
+  transform: rotate(360deg) scale(0);
+}
+
+.input:checked ~ .icon--sun {
+  transition-delay: 200ms;
+  transform: scale(1) rotate(360deg);
+}
+
+:global(.dark) .toggle {
+  background-color: #333;
+}
+:global(.dark) .icon {
+  color: var(--color-white);
+}
+</style>

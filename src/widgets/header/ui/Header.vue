@@ -26,7 +26,6 @@ const { isMenuOpen, isScrolled, headerRef, toggleMenu, closeMenu } = useHeader()
         <Menu
           :isOpen="isMenuOpen"
           :list="[
-            { name: 'ПРО НАС', goto: 'about' },
             { name: 'ПРОДУКТИ', href: 'products', goto: 'products' },
             { name: 'КОНТАКТИ', href: 'footer', goto: 'footer' },
           ]"
