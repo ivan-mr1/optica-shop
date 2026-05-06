@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { fetchProductById } from '@/shared/api/productApi';
+import { useRoute } from 'vue-router';
+import { useProductStore } from '@/entities/product';
 import { useLoadingState } from '@/shared/lib/useLoadingState';
 import { AddToCartButton } from '@/features/cart';
 import { ToggleFavoriteButton } from '@/features/favorite';
@@ -11,19 +11,22 @@ import { Breadcrumbs } from '@/shared/ui/breadcrumbs';
 import errorImg from '@/shared/assets/img/error.png';
 
 const route = useRoute();
-const router = useRouter();
+const productStore = useProductStore();
 const product = ref(null);
 const { isLoading, error, runAsync } = useLoadingState();
 
 const loadProduct = async () => {
   await runAsync(async () => {
-    product.value = await fetchProductById(route.params.id);
+    // Имитируем небольшую задержку
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const data = productStore.getProductById(route.params.id);
+    if (!data) throw new Error('Товар не знайдено');
+    product.value = data;
   }, 'Не вдалося завантажити інформацію про товар');
 };
 
 const fixImageUrl = (url) => {
   if (!url) return '';
-  // Если путь относительный (./), делаем его абсолютным от корня для вложенных роутов
   return url.startsWith('./') ? url.replace('./', '/') : url;
 };
 
@@ -35,28 +38,9 @@ onMounted(loadProduct);
     <div class="product-page__container">
       <Breadcrumbs
         :items="[
-          { name: 'Каталог', href: '/#products' },
           { name: product?.title || 'Завантаження...' },
         ]"
       />
-      <button class="product-page__back" @click="router.back()">
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10 4L6 8L10 12"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-        Назад
-      </button>
 
       <div v-if="isLoading" class="product-page__skeleton">
         <div class="product-page__grid">
@@ -153,14 +137,7 @@ onMounted(loadProduct);
 
   &__image-wrapper {
     position: relative;
-    background-color: var(--color-card-image-bg);
-    border-radius: 20px;
-    overflow: hidden;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
+    aspect-ratio: 16 / 9;
   }
 
   &__image {

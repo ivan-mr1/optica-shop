@@ -1,15 +1,13 @@
 import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
-import { createOrder as apiCreateOrder } from '@/shared/api/orderApi';
-
-import { useLoadingState } from '@/shared/lib/useLoadingState';
 
 export const useCartStore = defineStore('cart', () => {
   const localCart = localStorage.getItem('cart');
   const cart = ref(localCart ? JSON.parse(localCart) : []);
   const isDrawerOpen = ref(false);
   const orderId = ref(null);
-  const { isLoading: isCreatingOrder, error, runAsync } = useLoadingState();
+  const isCreatingOrder = ref(false);
+  const error = ref(null);
 
   const totalPrice = computed(() => cart.value.reduce((acc, item) => acc + item.price, 0));
   const discount = computed(() => Math.round((totalPrice.value * 5) / 100));
@@ -22,7 +20,7 @@ export const useCartStore = defineStore('cart', () => {
 
   const closeDrawer = () => {
     isDrawerOpen.value = false;
-    error.value = null; // Сброс ошибки при закрытии
+    error.value = null;
   };
 
   const addToCart = (item) => {
@@ -38,11 +36,18 @@ export const useCartStore = defineStore('cart', () => {
   const hasItem = (id) => cart.value.some((item) => item.id === id);
 
   const createOrder = async () => {
-    await runAsync(async () => {
-      const data = await apiCreateOrder(cart.value, finishPrice.value);
+    isCreatingOrder.value = true;
+    error.value = null;
+    try {
+      // Имитируем запрос к серверу
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      orderId.value = Math.floor(Math.random() * 10000);
       cart.value = [];
-      orderId.value = data.id;
-    }, 'Не вдалося оформити замовлення. Спробуйте пізніше.');
+    } catch {
+      error.value = 'Не вдалося оформити замовлення. Спробуйте пізніше.';
+    } finally {
+      isCreatingOrder.value = false;
+    }
   };
 
   watch(

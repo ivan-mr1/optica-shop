@@ -6,7 +6,7 @@ import Burger1 from './burger-button/Burger-1.vue';
 
 import { useHeader } from '../lib/useHeader';
 
-const { isMenuOpen, isScrolled, isHidden, headerRef, toggleMenu, closeMenu } = useHeader();
+const { isMenuOpen, isScrolled, headerRef, toggleMenu, closeMenu } = useHeader();
 </script>
 
 <template>
@@ -16,7 +16,6 @@ const { isMenuOpen, isScrolled, isHidden, headerRef, toggleMenu, closeMenu } = u
     :class="{
       'is-active': isMenuOpen,
       scroll: isScrolled,
-      'is-hidden': isHidden,
     }"
     data-right-padding
   >
@@ -54,10 +53,6 @@ const { isMenuOpen, isScrolled, isHidden, headerRef, toggleMenu, closeMenu } = u
   width: 100%;
 
   transition: transform 0.3s ease;
-
-  &.is-hidden {
-    transform: translateY(-100%);
-  }
 
   &__container {
     display: flex;

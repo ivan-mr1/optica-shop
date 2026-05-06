@@ -4,10 +4,8 @@ import { bodyLock, bodyUnlock } from '@/shared/utils/bodyLock';
 export function useHeader() {
   const isMenuOpen = ref(false);
   const isScrolled = ref(false);
-  const isHidden = ref(false);
   const headerRef = ref(null);
 
-  let lastScrollY = 0;
   let ticking = false;
 
   const toggleMenu = () => {
@@ -15,7 +13,6 @@ export function useHeader() {
 
     if (isMenuOpen.value) {
       bodyLock();
-      isHidden.value = false;
       document.addEventListener('keydown', onEscapePress);
     } else {
       bodyUnlock();
@@ -37,15 +34,9 @@ export function useHeader() {
     if (!ticking) {
       window.requestAnimationFrame(() => {
         const currentScrollY = window.scrollY;
-        const headerHeight = headerRef.value?.offsetHeight || 0;
-
-        const isScrollingDown = currentScrollY > lastScrollY;
-        const isScrolledPastHeader = currentScrollY > headerHeight;
 
         isScrolled.value = currentScrollY > 0;
-        isHidden.value = !isMenuOpen.value && isScrolledPastHeader && isScrollingDown;
 
-        lastScrollY = currentScrollY;
         ticking = false;
       });
       ticking = true;
@@ -72,7 +63,6 @@ export function useHeader() {
   return {
     isMenuOpen,
     isScrolled,
-    isHidden,
     headerRef,
     toggleMenu,
     closeMenu,

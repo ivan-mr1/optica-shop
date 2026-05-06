@@ -1,15 +1,13 @@
 import { defineStore } from 'pinia';
 import { ref, reactive, computed } from 'vue';
-import { fetchProducts } from '@/shared/api/productApi';
-import { useLoadingState } from '@/shared/lib/useLoadingState';
+import itemsData from './items.json';
 
 export const useProductStore = defineStore('product', () => {
   const allItems = ref([]);
-  const { isLoading, error, runAsync } = useLoadingState();
+  const isLoading = ref(false);
+  const error = ref(null);
 
   const filters = reactive({
-    sortBy: 'title',
-    searchQuery: '',
     page: 1,
     limit: 16,
   });
@@ -17,38 +15,30 @@ export const useProductStore = defineStore('product', () => {
   const items = computed(() => {
     const start = (filters.page - 1) * filters.limit;
     const end = start + filters.limit;
-    return allItems.value.slice(start, end);
+    return itemsData.slice(start, end);
   });
 
-  const totalItems = computed(() => allItems.value.length);
+  const totalItems = computed(() => itemsData.length);
 
   const fetchItems = async () => {
-    await runAsync(async () => {
-      const params = {
-        sortBy: filters.sortBy,
-      };
-
-      if (filters.searchQuery) {
-        params.title = `*${filters.searchQuery}*`;
-      }
-
-      const data = await fetchProducts(params);
-      allItems.value = data;
-    }, "Не вдалося завантажити товари. Перевірте з'єднання з інтернетом.");
+    isLoading.value = true;
+    error.value = null;
+    try {
+      await new Promise(resolve => setTimeout(resolve, 300));
+      allItems.value = itemsData;
+    } catch {
+      error.value = "Не вдалося завантажити товари.";
+    } finally {
+      isLoading.value = false;
+    }
   };
 
   const setPage = (page) => {
     filters.page = page;
   };
 
-  const setSortBy = (sortBy) => {
-    filters.sortBy = sortBy;
-    filters.page = 1;
-  };
-
-  const setSearchQuery = (query) => {
-    filters.searchQuery = query;
-    filters.page = 1;
+  const getProductById = (id) => {
+    return itemsData.find(item => item.id === Number(id));
   };
 
   return {
@@ -59,7 +49,6 @@ export const useProductStore = defineStore('product', () => {
     filters,
     fetchItems,
     setPage,
-    setSortBy,
-    setSearchQuery,
+    getProductById,
   };
 });

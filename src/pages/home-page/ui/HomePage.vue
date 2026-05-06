@@ -1,8 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
 import HeroHomePage from './sections/HeroHomePage.vue';
-import AboutHomePage from './sections/AboutHomePage.vue';
-import PartnersHomePage from './sections/PartnersHomePage.vue';
 import ProductsHomePage from './sections/ProductsHomePage.vue';
 import { useProductStore } from '@/entities/product';
 import { useFavoriteStore } from '@/entities/favorite';
@@ -18,8 +16,6 @@ onMounted(async () => {
 
 <template>
   <HeroHomePage />
-  <AboutHomePage />
-  <PartnersHomePage />
   <ProductsHomePage />
 </template>
 

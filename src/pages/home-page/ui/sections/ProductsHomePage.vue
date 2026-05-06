@@ -2,7 +2,6 @@
 import { ref, watch } from 'vue';
 import HeaderBlock from '@/shared/ui/header-block';
 import ProductCatalog from '@/widgets/product-catalog';
-import ProductsFilter from '@/features/filter-products';
 import Pagination from '@/shared/ui/pagination';
 import { useProductStore } from '@/entities/product';
 
@@ -34,7 +33,6 @@ const onChangePage = (page) => {
   >
     <div class="products__container">
       <HeaderBlock custom-class="products__header" id="products-title" title="Каталог" />
-      <ProductsFilter />
       <ProductCatalog
         :items="productStore.items"
         :is-loading="productStore.isLoading"
