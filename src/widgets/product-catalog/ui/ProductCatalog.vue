@@ -90,7 +90,7 @@ const emit = defineEmits(['retry']);
     margin-top: 10px;
 
     @include hover {
-      background-color: darken(#ffa501, 10%);
+      background-color: #ffa501;
     }
   }
 

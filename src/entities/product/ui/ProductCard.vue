@@ -1,5 +1,5 @@
 <script setup>
-import { formatPrice } from '@/shared/utils/formatPrice';
+import { formatPrice } from '@/shared/lib';
 
 defineProps({
   id: Number,

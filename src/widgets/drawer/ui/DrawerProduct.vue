@@ -1,5 +1,5 @@
 <script setup>
-import { formatPrice } from '@/shared/utils/formatPrice';
+import { formatPrice } from '@/shared/lib';
 import { IconClose } from '@/shared/ui/icons';
 
 defineProps({
