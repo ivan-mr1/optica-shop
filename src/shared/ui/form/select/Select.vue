@@ -1,96 +1,102 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
-const props = defineProps(['modelValue', 'options', 'label']);
-const emit = defineEmits(['update:modelValue']);
+const props = defineProps({
+  options: { type: Array, default: () => [] },
+  label: { type: String, default: 'Select' },
+});
+
+const model = defineModel({
+  type: [String, Number, null],
+  default: null,
+});
 
 const isOpen = ref(false);
-const el = ref(null);
+const selectRef = ref(null);
 
-const toggle = () => (isOpen.value = !isOpen.value);
-const select = (opt) => {
-  emit('update:modelValue', opt.value);
-  isOpen.value = false;
-};
+const currentLabel = computed(
+  () => props.options.find((o) => o.value === model.value)?.label || props.label,
+);
 
 const close = (e) => {
-  if (!el.value?.contains(e.target)) isOpen.value = false;
+  if (selectRef.value && !selectRef.value.contains(e.target)) isOpen.value = false;
 };
+
 onMounted(() => document.addEventListener('click', close));
 onUnmounted(() => document.removeEventListener('click', close));
-
-const getLabel = () =>
-  props.options.find((o) => o.value === props.modelValue)?.label || props.label;
 </script>
 
 <template>
-  <div class="select" :class="{ 'is-open': isOpen }" ref="el">
-    <div class="select__field" @click="toggle">
-      <span class="select__value" :class="{ 'is-placeholder': !modelValue }">
-        {{ getLabel() }}
-      </span>
-      <svg class="select__icon" viewBox="0 0 20 20">
+  <div ref="selectRef" class="select" :class="{ 'is-open': isOpen }">
+    <div class="select__field" @click="isOpen = !isOpen">
+      <span class="select__value">{{ currentLabel }}</span>
+      <svg class="select__icon" viewBox="0 0 20 20" width="20" height="20">
         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" fill="none" stroke-width="1.5" />
       </svg>
     </div>
 
-    <ul v-if="isOpen" class="select__list">
-      <li
-        v-for="opt in options"
-        :key="opt.value"
-        @click="select(opt)"
-        class="select__item"
-        :class="{ 'is-active': opt.value === modelValue }"
-      >
-        {{ opt.label }}
-      </li>
-    </ul>
+    <transition name="select-fade">
+      <ul v-if="isOpen" class="select__list">
+        <li
+          v-for="opt in options"
+          :key="opt.value"
+          class="select__item"
+          :class="{ 'is-active': opt.value === model }"
+          @click="
+            model = opt.value;
+            isOpen = false;
+          "
+        >
+          {{ opt.label }}
+        </li>
+      </ul>
+    </transition>
   </div>
 </template>
 
 <style scoped lang="scss">
-@use '@helpers' as *;
-
 .select {
   position: relative;
-  max-width: 200px;
-  width: 100%;
+  font-family: inherit;
+  min-width: 80px;
 
   &__field {
-    height: 50px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
-    border: 1px solid #c7c7c7;
+    gap: 5px;
+    padding: 0 5px;
+    border: 1px solid var(--select-border);
     border-radius: 8px;
-    background: #fff;
+    background: var(--select-bg);
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.2s;
 
     &:hover {
-      border-color: var(--color-orange);
+      border-color: #f60;
+    }
+    .is-open & {
+      border-color: #f60;
+      box-shadow: 0 0 0 1px #f60;
     }
   }
 
   &__value {
-    font-size: 16px;
-    color: var(--color-dark);
-
-    &.is-placeholder {
-      color: #888;
-    }
+    font-size: 14px;
+    color: var(--select-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__icon {
-    width: 18px;
-    height: 18px;
-    transition: 0.3s;
-    color: #181c29;
-
+    flex-shrink: 0;
+    color: var(--select-text);
+    transition: transform 0.3s;
     .is-open & {
       transform: rotate(180deg);
-      color: var(--color-orange);
+      color: #f60;
     }
   }
 
@@ -98,32 +104,44 @@ const getLabel = () =>
     position: absolute;
     top: calc(100% + 4px);
     left: 0;
-    width: 100%;
-    background: #fff;
-    border: 1px solid #eee;
+    min-width: 100%;
+    background: var(--select-bg);
+    border: 1px solid var(--select-border);
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--select-shadow);
     z-index: 50;
-    max-height: 240px;
-    overflow-y: auto;
     padding: 4px 0;
+    margin: 0;
+    list-style: none;
   }
 
   &__item {
-    padding: 10px 16px;
-    font-size: 15px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: var(--select-text);
     cursor: pointer;
-    transition: 0.2s;
+    transition: background 0.2s;
 
     &:hover {
-      background: #f5f5f5;
+      background: var(--select-hover-bg);
     }
-
     &.is-active {
-      background: #fff5f0; // Легкий оттенок оранжевого
-      color: var(--color-orange);
+      background: var(--select-active-bg);
+      color: #f60;
       font-weight: 600;
     }
   }
+}
+
+.select-fade-enter-active,
+.select-fade-leave-active {
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.select-fade-enter-from,
+.select-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 </style>

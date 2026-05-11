@@ -1,4 +1,5 @@
 {
-  "inFavorite": "В обраному",
-  "toFavorite": "В обране"
+  "code": "Код",
+  "currency": "грн",
+  "buy": "Купити"
 }

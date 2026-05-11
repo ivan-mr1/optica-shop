@@ -1,6 +1,7 @@
 <script setup>
 import Contacts from '@/shared/ui/contacts/Contacts.vue';
 import headerBlock from '@/shared/ui/header-block';
+import LangSelect from '@/shared/ui/lang-select';
 import Social from '@/shared/ui/social/Social.vue';
 </script>
 
@@ -21,6 +22,7 @@ import Social from '@/shared/ui/social/Social.vue';
             { name: '+38(066) 230 30 22', tel: '+380662303022' },
           ]"
         />
+        <LangSelect />
       </div>
     </div>
   </footer>

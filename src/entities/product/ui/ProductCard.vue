@@ -1,5 +1,6 @@
 <script setup>
 import { formatPrice } from '@/shared/lib';
+import { useSliceI18n } from '@/shared/i18n';
 
 defineProps({
   id: Number,
@@ -8,6 +9,12 @@ defineProps({
   code: String,
   price: Number,
 });
+
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+import en from '../locales/en.json';
+
+const { t } = useSliceI18n('productCard', { ru, ua, en });
 </script>
 
 <template>
@@ -29,9 +36,9 @@ defineProps({
             </RouterLink>
           </h3>
           <div class="product__flex">
-            <div class="product__code">Код: {{ code }}</div>
+            <div class="product__code">{{ t('code') }}: {{ code }}</div>
             <div class="product__price product-price">
-              <div class="product__price-current">{{ formatPrice(price) }} грн</div>
+              <div class="product__price-current">{{ formatPrice(price) }} {{ t('currency') }}</div>
             </div>
           </div>
 
