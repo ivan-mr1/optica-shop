@@ -1,1 +1,5 @@
-{}
+{
+  "removeFromFavoritesAria": "Remove from favorites: {title}",
+  "addToFavoritesAria": "Add to favorites: {title}",
+  "openFavorites": "Open favorites"
+}

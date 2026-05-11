@@ -1,5 +1,12 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from './locales/en.json';
+import ru from './locales/ru.json';
+import ua from './locales/ua.json';
+
+const { t } = useSliceI18n('breadcrumbs', { en, ru, ua });
 
 defineProps({
   items: {
@@ -11,10 +18,10 @@ defineProps({
 </script>
 
 <template>
-  <nav class="breadcrumbs" aria-label="Breadcrumb">
+  <nav class="breadcrumbs" :aria-label="t('breadcrumb')">
     <ul class="breadcrumbs__list">
       <li class="breadcrumbs__item">
-        <RouterLink to="/" class="breadcrumbs__link">Головна</RouterLink>
+        <RouterLink to="/" class="breadcrumbs__link">{{ t('home') }}</RouterLink>
       </li>
       <li v-for="(item, index) in items" :key="index" class="breadcrumbs__item">
         <span class="breadcrumbs__separator" aria-hidden="true">/</span>

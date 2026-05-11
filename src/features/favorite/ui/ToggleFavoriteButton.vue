@@ -2,6 +2,13 @@
 import { computed } from 'vue';
 import { useFavoriteStore } from '@/entities/favorite';
 import { IconFavorite } from '@/shared/ui/icons';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('toggleFavoriteButton', { en, ru, ua });
 
 const props = defineProps({
   item: {
@@ -26,7 +33,9 @@ const toggleFavoriteItem = () => {
     class="favorite-btn"
     :class="{ 'is-active': isFavorite }"
     :aria-label="
-      isFavorite ? `Видалити з обраного: ${item.title}` : `Додати до обраного: ${item.title}`
+      isFavorite
+        ? t('removeFromFavoritesAria', { title: item.title })
+        : t('addToFavoritesAria', { title: item.title })
     "
   >
     <IconFavorite />

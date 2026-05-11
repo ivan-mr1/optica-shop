@@ -2,19 +2,26 @@
 import HeaderBlock from '@/shared/ui/header-block';
 import { useCartStore } from '@/entities/cart';
 import { IconClose } from '@/shared/ui/icons';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('drawer', { en, ru, ua });
 
 const cartStore = useCartStore();
 </script>
 
 <template>
   <div class="drawer__head">
-    <HeaderBlock title="Кошик" />
+    <HeaderBlock :title="t('cartTitle')" />
 
     <button
       type="button"
       class="drawer__close"
-      aria-label="Close drawer"
-      title="Close drawer"
+      :aria-label="t('closeDrawer')"
+      :title="t('closeDrawer')"
       @click="() => cartStore.closeDrawer()"
     >
       <IconClose />

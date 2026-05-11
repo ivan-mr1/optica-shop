@@ -4,6 +4,13 @@ import { AddToCartButton } from '@/features/cart';
 import { ToggleFavoriteButton } from '@/features/favorite';
 import InfoBlock from '@/shared/ui/info-block';
 import errorImg from '@/shared/assets/img/error.png';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('productCatalog', { en, ru, ua });
 
 defineProps({
   items: { type: Array, default: () => [] },
@@ -21,9 +28,9 @@ const emit = defineEmits(['retry']);
   <div class="products__wrapper">
     <!-- Ошибка -->
     <div v-if="error" class="products__info-container">
-      <InfoBlock :image-url="errorImg" title="Сталася помилка" :text="error">
+      <InfoBlock :image-url="errorImg" :title="t('errorTitle')" :text="error">
         <template #action>
-          <button class="products__action-btn" @click="emit('retry')">Спробувати знову</button>
+          <button class="products__action-btn" @click="emit('retry')">{{ t('retry') }}</button>
         </template>
       </InfoBlock>
     </div>

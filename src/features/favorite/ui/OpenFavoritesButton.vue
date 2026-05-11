@@ -1,6 +1,13 @@
 <script setup>
 import { useFavoriteStore } from '@/entities/favorite';
 import { IconHeart } from '@/shared/ui/icons';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('favorite', { en, ru, ua });
 
 const favoriteStore = useFavoriteStore();
 </script>
@@ -9,8 +16,8 @@ const favoriteStore = useFavoriteStore();
   <RouterLink
     to="/favorites"
     class="header__action"
-    aria-label="Open favorite"
-    title="Open favorite"
+    :aria-label="t('openFavorites')"
+    :title="t('openFavorites')"
   >
     <span class="counter-icon">
       <IconHeart />

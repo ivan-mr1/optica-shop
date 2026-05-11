@@ -1,6 +1,13 @@
 <script setup>
 import { formatPrice } from '@/shared/lib';
 import { IconClose } from '@/shared/ui/icons';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('drawer', { en, ru, ua });
 
 defineProps({
   id: Number,
@@ -35,7 +42,7 @@ const emit = defineEmits(['onClickRemove']);
             @click="emit('onClickRemove')"
             type="button"
             class="product-drawer__close"
-            aria-label="Видалити товар"
+            :aria-label="t('removeProduct')"
           >
             <IconClose width="25" height="25" />
           </button>

@@ -1,4 +1,12 @@
 <script setup>
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from './locales/en.json';
+import ru from './locales/ru.json';
+import ua from './locales/ua.json';
+
+const { t } = useSliceI18n('scroll-down-button', { en, ru, ua });
+
 defineProps({
   goto: { type: String, default: null },
 });
@@ -9,8 +17,8 @@ defineProps({
     type="button"
     class="scroll-down-btn"
     :data-goto="goto"
-    title="Scroll down"
-    aria-label="Scroll down"
+    :title="t('scrollDown')"
+    :aria-label="t('scrollDown')"
   >
     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="80" viewBox="0 0 50 80">
       <path

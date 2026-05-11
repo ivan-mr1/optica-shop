@@ -16,9 +16,7 @@ export const useSliceI18n = (sliceName, localMessages) => {
   const globalI18n = i18n.global;
 
   Object.keys(localMessages).forEach((locale) => {
-    if (!globalI18n.getLocaleMessage(locale)[sliceName]) {
-      globalI18n.mergeLocaleMessage(locale, { [sliceName]: localMessages[locale] });
-    }
+    globalI18n.mergeLocaleMessage(locale, { [sliceName]: localMessages[locale] });
   });
 
   return {

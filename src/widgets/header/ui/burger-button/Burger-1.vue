@@ -1,4 +1,12 @@
 <script setup>
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from './locales/en.json';
+import ru from './locales/ru.json';
+import ua from './locales/ua.json';
+
+const { t } = useSliceI18n('burger-button', { en, ru, ua });
+
 defineOptions({
   inheritAttrs: false,
 });
@@ -17,8 +25,8 @@ const props = defineProps({
     type="button"
     class="header__burger-button burger-button"
     :class="{ 'is-active': props.isActive }"
-    :aria-label="props.isActive ? 'Close menu' : 'Open menu'"
-    :title="props.isActive ? 'Close menu' : 'Open menu'"
+    :aria-label="props.isActive ? t('closeMenu') : t('openMenu')"
+    :title="props.isActive ? t('closeMenu') : t('openMenu')"
   >
     <span class="burger-button__inner">
       <span class="burger-button__line"></span>

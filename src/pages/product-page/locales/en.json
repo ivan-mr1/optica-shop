@@ -1,1 +1,6 @@
-{}
+{
+  "errorTitle": "Error",
+  "retry": "Try again",
+  "loadError": "Failed to load product information",
+  "productNotFound": "Product not found"
+}

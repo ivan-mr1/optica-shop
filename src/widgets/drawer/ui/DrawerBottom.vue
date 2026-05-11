@@ -2,6 +2,13 @@
 import Button from '@/shared/ui/form/button';
 import { formatPrice } from '@/shared/lib';
 import { useCartStore } from '@/entities/cart';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('drawer', { en, ru, ua });
 
 const cartStore = useCartStore();
 </script>
@@ -10,19 +17,19 @@ const cartStore = useCartStore();
   <div class="drawer__bottom bottom-drawer">
     <div class="bottom-drawer__info">
       <div class="bottom-drawer__item">
-        <span class="bottom-drawer__label">Усього:</span>
+        <span class="bottom-drawer__label">{{ t('total') }}</span>
         <span class="bottom-drawer__value">{{ formatPrice(cartStore.totalPrice) }} грн</span>
       </div>
 
       <div class="bottom-drawer__item">
-        <span class="bottom-drawer__label">Знижка:</span>
+        <span class="bottom-drawer__label">{{ t('discount') }}</span>
         <span class="bottom-drawer__value bottom-drawer__value--discount">
           -{{ formatPrice(cartStore.discount) }} грн
         </span>
       </div>
 
       <div class="bottom-drawer__item">
-        <span class="bottom-drawer__label">Усього зi знижкою:</span>
+        <span class="bottom-drawer__label">{{ t('totalWithDiscount') }}</span>
         <span class="bottom-drawer__value"> {{ formatPrice(cartStore.finishPrice) }} грн </span>
       </div>
     </div>
@@ -32,7 +39,7 @@ const cartStore = useCartStore();
       @click="() => cartStore.createOrder()"
       :disabled="cartStore.cartIsEmpty || cartStore.isCreatingOrder"
     >
-      Оформити замовлення
+      {{ t('placeOrder') }}
     </Button>
   </div>
 </template>

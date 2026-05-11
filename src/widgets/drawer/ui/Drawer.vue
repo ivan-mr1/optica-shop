@@ -7,6 +7,13 @@ import cartEmptyImg from '@/shared/assets/img/drawer/cart-empty.png';
 import orderImg from '@/shared/assets/img/drawer/order.png';
 import errorImg from '@/shared/assets/img/error.png';
 import { useCartStore } from '@/entities/cart';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('drawer', { en, ru, ua });
 
 defineProps({
   isActive: { type: Boolean, default: false },
@@ -33,21 +40,22 @@ const cartStore = useCartStore();
           <InfoBlock
             v-if="cartStore.error"
             :image-url="errorImg"
-            title="Помилка завантаження"
+            :title="t('errorTitle')"
             :text="cartStore.error"
           />
           <InfoBlock
             v-else-if="cartStore.orderId"
             :image-url="orderImg"
             :image-width="83"
-            title="Замовлення оформлене!"
-            :text="`Ваше замовлення № ${cartStore.orderId} скоро буде передано кур'єрській доставці`"
+            :title="t('orderTitle')"
+            :text="t('orderText', { orderId: cartStore.orderId })"
           />
           <InfoBlock
             v-else
             :image-url="cartEmptyImg"
-            title="Кошик порожній"
-            text="Додайте бодай один товар, щоб зробити замовлення."
+            :title="t('emptyTitle')"
+            :text="t('emptyText')"
+          />
           />
         </div>
 

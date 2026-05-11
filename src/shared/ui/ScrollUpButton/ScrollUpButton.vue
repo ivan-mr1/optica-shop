@@ -1,5 +1,12 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from './locales/en.json';
+import ru from './locales/ru.json';
+import ua from './locales/ua.json';
+
+const { t } = useSliceI18n('scroll-up-button', { en, ru, ua });
 
 const props = defineProps({
   offset: { type: Number, default: 300 },
@@ -41,8 +48,8 @@ onUnmounted(() => {
   <button
     class="scroll-up"
     :class="{ 'scroll-up--active': isActive }"
-    aria-label="scroll to top"
-    title="scroll to top"
+    :aria-label="t('scrollToTop')"
+    :title="t('scrollToTop')"
     @click="scrollToTop"
   >
     <svg class="scroll-up__svg" viewBox="-2 -2 52 52">

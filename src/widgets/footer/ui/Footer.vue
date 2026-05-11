@@ -3,18 +3,22 @@ import Contacts from '@/shared/ui/contacts/Contacts.vue';
 import headerBlock from '@/shared/ui/header-block';
 import LangSelect from '@/shared/ui/lang-select';
 import Social from '@/shared/ui/social/Social.vue';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('footer', { en, ru, ua });
 </script>
 
 <template>
   <footer id="footer" class="footer">
     <div class="footer__container">
-      <headerBlock
-        custom-class="footer__header"
-        title="Будемо раді вашому зверненню"
-        text="Звʼяжіться з нами будь-яким зручним для вас способом:"
-      />
+      <headerBlock custom-class="footer__header" :title="t('title')" :text="t('text')" />
       <div class="footer__wrapper">
         <Social base-class="footer__soc1al" />
+        <LangSelect />
         <Contacts
           base-class="footer__contacts"
           :contacts="[
@@ -22,7 +26,6 @@ import Social from '@/shared/ui/social/Social.vue';
             { name: '+38(066) 230 30 22', tel: '+380662303022' },
           ]"
         />
-        <LangSelect />
       </div>
     </div>
   </footer>

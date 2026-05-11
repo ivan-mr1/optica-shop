@@ -2,6 +2,13 @@
 import { computed } from 'vue';
 import { useCartStore } from '@/entities/cart';
 import Button from '@/shared/ui/form/button';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('addToCartButton', { en, ru, ua });
 
 const props = defineProps({
   item: {
@@ -28,10 +35,10 @@ const onClickAddCart = () => {
     class="button--card"
     :in-cart="isAdded"
     :aria-label="
-      isAdded ? `Товар ${item.title} вже у кошику` : `Додати у кошик товар: ${item.title}`
+      isAdded ? t('inCartAria', { title: item.title }) : t('addToCartAria', { title: item.title })
     "
     @click.stop="onClickAddCart"
   >
-    {{ isAdded ? 'У кошику' : 'Купити' }}
+    {{ isAdded ? t('inCart') : t('buy') }}
   </Button>
 </template>

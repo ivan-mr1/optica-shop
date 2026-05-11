@@ -5,6 +5,13 @@ import Actions from './Actions.vue';
 import Burger1 from './burger-button/Burger-1.vue';
 
 import { useHeader } from '../lib/useHeader';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('header', { en, ru, ua });
 
 const { isMenuOpen, isScrolled, headerRef, toggleMenu, closeMenu } = useHeader();
 </script>
@@ -26,8 +33,8 @@ const { isMenuOpen, isScrolled, headerRef, toggleMenu, closeMenu } = useHeader()
         <Menu
           :isOpen="isMenuOpen"
           :list="[
-            { name: 'ПРОДУКТИ', href: 'products', goto: 'products' },
-            { name: 'КОНТАКТИ', href: 'footer', goto: 'footer' },
+            { name: t('products'), href: 'products', goto: 'products' },
+            { name: t('contacts'), href: 'footer', goto: 'footer' },
           ]"
           @click="closeMenu"
         />

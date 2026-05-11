@@ -1,11 +1,18 @@
 import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
 
 export const useFavoriteStore = defineStore('favorite', () => {
   const localFavorites = localStorage.getItem('favorites');
   const favorites = ref(localFavorites ? JSON.parse(localFavorites) : []);
   const isLoading = ref(false);
   const error = ref(null);
+
+  const { t } = useSliceI18n('favorite', { en, ru, ua });
 
   const favoriteItems = computed(() => favorites.value.map((fav) => fav.item));
 
@@ -17,7 +24,7 @@ export const useFavoriteStore = defineStore('favorite', () => {
       const data = localStorage.getItem('favorites');
       favorites.value = data ? JSON.parse(data) : [];
     } catch {
-      error.value = 'Не вдалося завантажити закладки.';
+      error.value = t('loadError');
     } finally {
       isLoading.value = false;
     }

@@ -1,5 +1,12 @@
 <script setup>
 import { computed } from 'vue';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from './locales/en.json';
+import ru from './locales/ru.json';
+import ua from './locales/ua.json';
+
+const { t } = useSliceI18n('pagination', { en, ru, ua });
 
 const props = defineProps({
   totalItems: { type: Number, required: true },
@@ -25,7 +32,7 @@ const pages = computed(() => {
     <button
       class="pagination__arrow"
       :disabled="currentPage === 1"
-      aria-label="Previous page"
+      :aria-label="t('previous')"
       @click="emit('change-page', currentPage - 1)"
     >
       &lt;
@@ -46,7 +53,7 @@ const pages = computed(() => {
     <button
       class="pagination__arrow"
       :disabled="currentPage === totalPages"
-      aria-label="Next page"
+      :aria-label="t('next')"
       @click="emit('change-page', currentPage + 1)"
     >
       &gt;

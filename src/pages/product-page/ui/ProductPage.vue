@@ -9,6 +9,13 @@ import Skeleton from '@/shared/ui/skeleton';
 import InfoBlock from '@/shared/ui/info-block';
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs';
 import errorImg from '@/shared/assets/img/error.png';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+
+const { t } = useSliceI18n('productPage', { en, ru, ua });
 
 const route = useRoute();
 const productStore = useProductStore();
@@ -20,9 +27,9 @@ const loadProduct = async () => {
     // Имитируем небольшую задержку
     await new Promise((resolve) => setTimeout(resolve, 300));
     const data = productStore.getProductById(route.params.id);
-    if (!data) throw new Error('Товар не знайдено');
+    if (!data) throw new Error(t('productNotFound'));
     product.value = data;
-  }, 'Не вдалося завантажити інформацію про товар');
+  }, t('loadError'));
 };
 
 const fixImageUrl = (url) => {
@@ -51,9 +58,9 @@ onMounted(loadProduct);
       </div>
 
       <div v-else-if="error" class="product-page__error">
-        <InfoBlock :image-url="errorImg" title="Помилка" :text="error">
+        <InfoBlock :image-url="errorImg" :title="t('errorTitle')" :text="error">
           <template #action>
-            <button class="product-page__retry-btn" @click="loadProduct">Спробувати знову</button>
+            <button class="product-page__retry-btn" @click="loadProduct">{{ t('retry') }}</button>
           </template>
         </InfoBlock>
       </div>

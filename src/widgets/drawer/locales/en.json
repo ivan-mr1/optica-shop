@@ -1,0 +1,14 @@
+{
+  "errorTitle": "Loading error",
+  "orderTitle": "Order placed!",
+  "orderText": "Your order № {orderId} will soon be handed over to courier delivery",
+  "emptyTitle": "Cart is empty",
+  "emptyText": "Add at least one product to place an order.",
+  "cartTitle": "Cart",
+  "total": "Total:",
+  "discount": "Discount:",
+  "totalWithDiscount": "Total with discount:",
+  "placeOrder": "Place order",
+  "removeProduct": "Remove product",
+  "closeDrawer": "Close drawer"
+}

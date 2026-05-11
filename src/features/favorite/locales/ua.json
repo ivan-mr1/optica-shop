@@ -1,1 +1,5 @@
-{}
+{
+  "removeFromFavoritesAria": "Видалити з обраного: {title}",
+  "addToFavoritesAria": "Додати до обраного: {title}",
+  "openFavorites": "Відкрити обране"
+}

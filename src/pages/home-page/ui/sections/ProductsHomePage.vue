@@ -4,6 +4,13 @@ import HeaderBlock from '@/shared/ui/header-block';
 import ProductCatalog from '@/widgets/product-catalog';
 import Pagination from '@/shared/ui/pagination';
 import { useProductStore } from '@/entities/product';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../../locales/en.json';
+import ru from '../../locales/ru.json';
+import ua from '../../locales/ua.json';
+
+const { t } = useSliceI18n('homePage', { en, ru, ua });
 
 const productStore = useProductStore();
 const productsRef = ref(null);
@@ -32,7 +39,7 @@ const onChangePage = (page) => {
     aria-labelledby="products-title"
   >
     <div class="products__container">
-      <HeaderBlock custom-class="products__header" id="products-title" title="Каталог" />
+      <HeaderBlock custom-class="products__header" id="products-title" :title="t('catalog')" />
       <ProductCatalog
         :items="productStore.items"
         :is-loading="productStore.isLoading"

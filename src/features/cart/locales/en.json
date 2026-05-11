@@ -1,1 +1,7 @@
-{}
+{
+  "inCart": "In cart",
+  "buy": "Buy",
+  "inCartAria": "Product {title} is already in cart",
+  "addToCartAria": "Add to cart product: {title}",
+  "openCart": "Open cart"
+}

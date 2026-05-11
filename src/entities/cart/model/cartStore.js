@@ -1,5 +1,10 @@
 import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
+import { useSliceI18n } from '@/shared/i18n';
+
+import en from '../locales/en.json';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
 
 export const useCartStore = defineStore('cart', () => {
   const localCart = localStorage.getItem('cart');
@@ -8,6 +13,8 @@ export const useCartStore = defineStore('cart', () => {
   const orderId = ref(null);
   const isCreatingOrder = ref(false);
   const error = ref(null);
+
+  const { t } = useSliceI18n('cart', { en, ru, ua });
 
   const totalPrice = computed(() => cart.value.reduce((acc, item) => acc + item.price, 0));
   const discount = computed(() => Math.round((totalPrice.value * 5) / 100));
@@ -44,7 +51,7 @@ export const useCartStore = defineStore('cart', () => {
       orderId.value = Math.floor(Math.random() * 10000);
       cart.value = [];
     } catch {
-      error.value = 'Не вдалося оформити замовлення. Спробуйте пізніше.';
+      error.value = t('orderError');
     } finally {
       isCreatingOrder.value = false;
     }
